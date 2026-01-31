@@ -738,6 +738,10 @@ function updateSlider() {
     const nameElement = cardElement.querySelector(".product-name");
     const descElement = cardElement.querySelector(".product-description");
 
+    const oldLink = cardElement.querySelector('a');
+    if (oldLink) {
+      oldLink.remove();
+    }
 
     const link = document.createElement('a');
     link.href = product.url;
@@ -745,15 +749,20 @@ function updateSlider() {
     link.style.color = 'inherit';
     link.style.display = 'block';
 
-    while (cardElement.firstChild) {
-      link.appendChild(cardElement.firstChild);
-    }
+    const imgClone = img.cloneNode(true);
+    const nameClone = nameElement.cloneNode(true);
+    const descClone = descElement.cloneNode(true);
+
+    cardElement.innerHTML = '';
+    link.appendChild(imgClone);
+    link.appendChild(nameClone);
+    link.appendChild(descClone);
     cardElement.appendChild(link);
 
-    img.src = product.img;
-    img.alt = product.name;
-    nameElement.textContent = product.name;
-    descElement.textContent = product.description;
+    imgClone.src = product.img;
+    imgClone.alt = product.name;
+    nameClone.textContent = product.name;
+    descClone.textContent = product.description;
   }
 
   setProductData(prevCard, products[prevIndex]);
